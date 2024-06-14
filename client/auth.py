@@ -40,7 +40,7 @@ class BlumAuth:
         self.refresh_token = self.data.refresh_token
         try:
             with open(f'sessions/{self.data.name}.session', 'r') as session:
-                self.refresh_token = session.readline()
-                self.token = session.readline()
+                self.refresh_token = session.readline().replace('\n', '')
+                self.token = session.readline().replace('\n', '')
         except:
             pass
