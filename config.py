@@ -17,5 +17,5 @@ fetch_delay = range(15, 30)  # delay between fetches (used for dumping, is secon
 fetch_split_delay = range(2, 5)  # delay between clients pair fetches
 
 dump_bot_token = None  # work token or None for no dumping
-dump_profile_id = 1497967816
+dump_profile_id = 1497967816 # profile id (who will receive dump message)
 dump_delay = 5  # delay between dump data in telegram (is seconds)
