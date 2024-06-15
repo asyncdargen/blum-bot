@@ -104,28 +104,23 @@ def __work_farming(client):
 
     return False
 
-
 def __work(client):
-    work = False
-
     if not client.fetch():
         client.log('Client fetch failed')
-        return True
+        return False
 
-    if __work_farming(client):
-        work = True
+    if config.actions['farming'] and __work_farming(client):
         sleep(1.5)
 
-    if __work_daily(client):
-        work = True
+    if config.actions['daily'] and __work_daily(client):
         sleep(1.6)
 
-    if __work_game(client):
-        work = True
-    elif __work_tasks(client):
-        work = True
+    if config.actions['game'] and __work_game(client):
+        sleep(1.5)
+    elif config.actions['tasks'] and __work_tasks(client):
+        sleep(1.5)
 
-    return work
+    return True
 
 
 def run_work():

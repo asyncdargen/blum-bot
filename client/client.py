@@ -51,6 +51,21 @@ class BlumClient:
 
         return True
 
+    def fetch_friends_balance(self):
+        response = self.__request_get('/friends/balance')
+
+        if response.status_code != 200:
+            return 0.0
+
+        try:
+            json = response.json()
+
+            return float(json['amountForClaim']) if json['canClaim'] else 0.0
+        except Exception as e:
+            print(e)
+
+        return 0.0
+
     def fetch_available_tasks(self):
         response = self.__request_get('/tasks')
 
@@ -62,7 +77,8 @@ class BlumClient:
             tasks = {}
 
             def fetch_task(task):
-                if task['type'] in ['SOCIAL_SUBSCRIPTION', 'APPLICATION_LAUNCH'] and task['status'] not in ['FINISHED', 'STARTED']:
+                if task['type'] in ['SOCIAL_SUBSCRIPTION', 'APPLICATION_LAUNCH'] and task['status'] not in ['FINISHED',
+                                                                                                            'STARTED']:
                     tasks[task['id']] = task['status'] == 'READY_FOR_CLAIM'
                     return True
 

@@ -7,6 +7,14 @@ clients = [
     ClientData("arbuz", None)
 ]  # Clients with first refresh_token (u can specify it in sessions/{client_name}.session in first line)
 
+actions = {
+    "farming": True,
+    "game": False,
+    "daily": True,
+    "tasks": True,
+    "friends": True
+}
+
 game_delay = range(50, 70)  # time run delay (in seconds)
 game_points = range(250, 280)  # points to get in game
 
