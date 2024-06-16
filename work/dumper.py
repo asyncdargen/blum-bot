@@ -15,7 +15,7 @@ __message = -1
 def __dump_client(client: BlumClient) -> str:
     return f"""{client.data.name} {'🟢' if client.last_fetch else '🔴'}:
     Баланс: {client.balance}
-    Билеты: {client.passes} 
+    Билеты: {client.passes} ({client.passes * config.game_points.start} - {client.passes * config.game_points.stop})
     Фарминг: {'еще ' + format_time(client.farming_remaining()) if not client.is_farming_end() and client.is_farming_run() else 'не идет (странно)'}
 """
 
@@ -23,10 +23,14 @@ def __dump(clients):
     global __message
 
     text = '\n'.join(map(__dump_client, clients))
+
+    total_balance = sum(map(lambda client: client.balance, clients))
+    total_passes = sum(map(lambda client: client.passes, clients))
     text += f"""
 Суммарно:
-    Баланс: {sum(map(lambda client: client.balance, clients))}
-    Билеты: {sum(map(lambda client: client.passes, clients))}
+    Баланс: {total_balance}
+    Билеты: {total_passes} ({total_passes * config.game_points.start} - {total_passes * config.game_points.stop})
+    Возможный баланс: {(total_passes * config.game_points.start + total_passes * config.game_points.stop) / 2.0 + total_balance}
 """
     if __message != -1:
         post(f'https://api.telegram.org/bot{config.dump_bot_token}/editMessageText', json={
