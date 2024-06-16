@@ -15,7 +15,7 @@ __message = -1
 def __dump_client(client: BlumClient) -> str:
     return f"""{client.data.name} {'🟢' if client.last_fetch else '🔴'}:
     Баланс: {client.balance}
-    Билеты: {client.passes} ({client.passes * config.game_points.start} - {client.passes * config.game_points.stop})
+    Билеты: {client.passes} ({(client.passes * config.game_points.start + client.passes * config.game_points.stop) / 2.0})
     Фарминг: {'еще ' + format_time(client.farming_remaining()) if not client.is_farming_end() and client.is_farming_run() else 'не идет (странно)'}
 """
 
@@ -29,7 +29,7 @@ def __dump(clients):
     text += f"""
 Суммарно:
     Баланс: {total_balance}
-    Билеты: {total_passes} ({total_passes * config.game_points.start} - {total_passes * config.game_points.stop})
+    Билеты: {total_passes} ({(total_passes * config.game_points.start + total_passes * config.game_points.stop) / 2.0})
     Возможный баланс: {(total_passes * config.game_points.start + total_passes * config.game_points.stop) / 2.0 + total_balance}
 """
     if __message != -1:
