@@ -23,7 +23,11 @@ def __dump(clients):
     global __message
 
     text = '\n'.join(map(__dump_client, clients))
-
+    text += f"""
+Суммарно:
+    Баланс: {sum(map(lambda client: client.balance, clients))}
+    Билеты: {sum(map(lambda client: client.passes, clients))}
+"""
     if __message != -1:
         post(f'https://api.telegram.org/bot{config.dump_bot_token}/editMessageText', json={
             'chat_id': config.dump_profile_id,
