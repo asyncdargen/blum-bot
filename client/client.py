@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from client.data import ClientData
 from client.auth import BlumAuth
 
@@ -18,7 +20,9 @@ class BlumClient:
         self.auth = BlumAuth(data)
 
     def log(self, text):
-        print(f'{self.data.name}: {text}')
+        current_time = datetime.now().time()
+        timestamp = current_time.strftime('%Y-%m-%d %H:%M:%S')
+        print(f'[{timestamp}] {self.data.name}: {text}')
 
     def fetch(self, retry: bool = False) -> bool:
         response = self.__request_get('/user/balance')
