@@ -20,7 +20,7 @@ class BlumClient:
         self.auth = BlumAuth(data)
 
     def log(self, text):
-        current_time = datetime.now().time()
+        current_time = datetime.now()
         timestamp = current_time.strftime('%Y-%m-%d %H:%M:%S')
         print(f'[{timestamp}] {self.data.name}: {text}')
 
